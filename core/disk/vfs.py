@@ -109,7 +109,8 @@ class MemoryVFS(VirtualFileSystem):
         return "/" + path
 
     def _get_file_list(self) -> list[str]:
-        return self.files.keys()
+        # return a snapshot to avoid exposing the live dict_keys view
+        return list(self.files.keys())
 
 
 class LocalDiskVFS(VirtualFileSystem):
