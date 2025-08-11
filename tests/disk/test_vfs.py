@@ -86,3 +86,12 @@ def test_local_disk_vfs_with_matcher(tmp_path):
 
     vfs.remove("test.log")
     assert exists(join(tmp_path, "test.log"))
+
+
+def test_memory_vfs_get_file_list_returns_independent_list():
+    vfs = MemoryVFS()
+    vfs.save("first.txt", "data")
+    file_list = vfs._get_file_list()
+    vfs.save("second.txt", "more")
+    assert isinstance(file_list, list)
+    assert file_list == ["first.txt"]
